@@ -1,0 +1,16 @@
+#ifndef OBIEKT_HH
+#define OBIEKT_HH
+#include "Dr3D_gnuplot_api.hh"
+#include"Wektor.hh"
+#include"Macierz.hh"
+#include"MacierzO.hh"
+
+class Obiekt {
+protected:
+  std::shared_ptr<drawNS::Draw3DAPI> api;
+public:
+  Obiekt(drawNS::Draw3DAPI  *ob): obiekt(ob){}
+  virtual void rysuj() = 0;
+  virtual ~Obiekt(){}
+};
+#endif

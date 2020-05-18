@@ -1,0 +1,46 @@
+#ifndef PROSTOPADLOSCIAN_HH
+#define PROSTOPADLOSCIAN_HH
+
+#include "Figura3D.hh"
+
+class Prostopadloscian : public Figura3D {
+protected:
+
+  Wektor<double,3> wierzch[8];
+
+public:
+
+  Prostopadloscian();
+  Prostopadloscian(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3> *x, Wektor<double,3> &sr, MacierzO & obr,uint & id) : Figura3D(obiekt,sr,obr,id)
+  {
+    for(int i=0;i<8;i++)
+      wierzch[i]=x[i];
+  }
+
+virtual  void  rysuj(){
+
+         Prostopadloscian HLP(*this);
+  for(int i=0;i<8;i++)   
+    { HLP.wierzch[i]= sr+obr*wierzch[i]; }
+
+  
+    id=api->draw_polyhedron(std::vector<std::vector<drawNS::Point3D> >
+			       {{HLP.wierzch[0],HLP.wierzch[1],HLP.wierzch[2],HLP.wierzch[3]},{HLP.wierzch[4],HLP.wierzch[5],HLP.wierzch[6],HLP.wierzch[7]}});
+    api->redraw();
+  };
+
+
+  void rotacja(double kat){
+    api->erase_shape(id);
+    MacierzO o(obr);
+    obr.obrotZ(kat);
+    obr=obr*o;
+  }
+
+
+  
+};
+
+#endif
+															
+															

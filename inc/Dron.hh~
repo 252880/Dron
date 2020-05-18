@@ -1,0 +1,80 @@
+#ifndef DRON_HH
+#define DRON_HH
+ 
+#include<iostream>
+#include "Prostopadloscian.hh"
+#include "Sruba.hh"
+
+class Dron : public Prostopadloscian {
+protected:
+  Sruba s1,s2;
+public:
+
+  Dron();
+  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr, MacierzO &obr,uint &id,MacierzO &o)
+    :Prostopadloscian(obiekt,x,sr,obr,id),s1(obiekt,y,sr,obr,id,o),s2(obiekt,y,sr,obr,id,o){};
+														      
+
+
+    
+
+  void przemieszczenie(double kat, double odleglosc){
+      
+    Wektor<double,3> ruch;
+    double rad= (3.14*kat)/180;
+    
+
+    ruch[0]=odleglosc*cos(rad);
+    ruch[1]=0;
+    ruch[2]= odleglosc*sin(rad);
+
+
+
+    for(double i = 300; i >0; i--)
+      {
+
+	sr =sr + (obr * (ruch/i));		         
+
+	usun();
+	s1.rotacja(kat);
+	s2.rotacja(kat);
+	rysuj();
+	
+       
+       }
+  };
+
+  void rotacja(double kat){
+    for(int i=500;i>0;i--){       	         
+        s1.usun();
+	s2.usun();
+	s1.rotacja(kat/i);
+	s2.rotacja(kat/i);
+	s1.obrot();
+	s2.obrot();
+	Prostopadloscian::rotacja(kat/i);
+
+    rysuj();
+    }    
+  };
+  
+  void rysuj(){
+    Wektor<double,3> X;
+     X[0]=0;X[1]=-20;X[2]=0;
+
+    s2.rysuj(obr*X+sr);
+    s1.rysuj(sr);
+    Prostopadloscian::rysuj();
+  };
+
+
+  void usun(){
+
+    s1.usun();
+    s2.usun();
+    api->erase_shape(id);
+  };
+  
+};  
+
+#endif

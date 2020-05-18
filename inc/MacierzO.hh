@@ -1,0 +1,30 @@
+#ifndef MACIERZO_HH
+#define MACIERZO_HH
+
+#include "Macierz.hh"
+#include<cmath>
+
+
+class MacierzO: public Macierz<double,3> {
+  public:
+
+  MacierzO(){
+    for(int i=0;i<3;i++)
+      tab[i][i]=1;};
+
+  MacierzO(const Macierz <double,3>x) :Macierz<double,3>(x){};
+
+
+
+
+  MacierzO obrotX(double kat);
+  MacierzO obrotY(double kat);
+  MacierzO obrotZ(double kat);
+
+
+};
+
+      
+
+
+#endif

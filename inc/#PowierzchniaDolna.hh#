@@ -1,0 +1,41 @@
+#ifndef POWIERZCHNIADOLNA_HH
+#define POWIERZCHNIADOLNA_HH
+
+#include "Rysuj_Obiekt.hh"
+#include "Wektor.hh"
+
+
+
+
+
+
+class PowierzchniaDolna : public Rysuj_Obiekt{
+
+public:
+  PowierzchniaDolna();
+
+  PowierzchniaDolna(drawNS::APIGnuPlot3D *obiekt) :Rysuj_Obiekt(obiekt){};
+
+
+
+
+  void rysuj(){
+    api->draw_surface(std::vector<std::vector<drawNS::Point3D>>
+       {{ drawNS::Point3D(99,99,-99), drawNS::Point3D(99,-0,-99),drawNS::Point3D(99,-99,-99)
+       },{
+	  drawNS::Point3D(49,99,-99),drawNS::Point3D(49,-0,-99), drawNS::Point3D(49,-99,-99)
+      },{
+	  drawNS::Point3D(0,99,-99), drawNS::Point3D(0,-0,-99),drawNS::Point3D(0,-99,-99)
+      },{
+	  drawNS::Point3D(-49,99,-99),drawNS::Point3D(-49,-0,-99), drawNS::Point3D(-49,-99,-99)
+      },{
+	  drawNS::Point3D(-99,99,-99), drawNS::Point3D(-99,-0,-99),drawNS::Point3D(-99,-99,-99)}},"yellow");
+
+
+          api->redraw();
+
+  };
+};
+
+
+#endif
