@@ -1,0 +1,53 @@
+#ifndef INTERFEJS_HH
+#define INTERFEJS__HH
+
+#include"Dron.hh"
+#include"Przeszkoda.hh"
+
+class interfejs : public Dron {
+protected:
+  Przeszkoda P;
+
+public:
+
+  interfejs();
+  interfejs(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3>*z,Wektor<double,3> sr, MacierzO &obr,uint &id,MacierzO &o)
+    :Dron(obiekt,x,y,sr,obr,id,o),P(obiekt,z,sr,obr,id){};
+
+
+
+
+  void rysuj(){
+    Dron::rysuj();
+  };
+
+
+  void przemieszczenie(double kat,double odleglosc){
+    Dron::przemieszczenie(kat,odleglosc);
+  };
+
+  
+  void rotacja(double kat){
+    Dron::rotacja(kat);
+  };
+
+
+  void dodajPrzeszkode(Wektor<double,3> x){
+
+    P.rysuj(x);
+  };
+
+  void dodajDron(Wektor<double,3> x){
+    Dron::DodajDron(x);
+  };
+
+
+
+
+
+
+
+
+};
+
+#endif

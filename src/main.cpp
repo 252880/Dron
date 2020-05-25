@@ -2,7 +2,7 @@
 #include "Dr3D_gnuplot_api.hh"
 #include"PowierzchniaGorna.hh"
 #include"PowierzchniaDolna.hh"
-#include "Dron.hh"
+#include"Dron.hh"
 
 #include<fstream>
 
@@ -21,21 +21,21 @@ void wait4key() {
   } while(std::cin.get() != '\n');
 }
 
-
+int Przeszkoda::ile_utworzono=0;
+int Przeszkoda::ile_istnieje=0;
 int main() {
-  drawNS::APIGnuPlot3D  * api= new APIGnuPlot3D(-120,120,-120,120,-120,120,-1);
-  Wektor<double,3> dr[8],s1[8];
-  Wektor<double,3> sr; 
+  drawNS::APIGnuPlot3D  * api= new APIGnuPlot3D(-120,120,-120,120,-120,120,0);
+  Wektor<double,3> dr[8],prz[8],s1[12];
+  Wektor<double,3> sr,sro,sr_przeszkody,sr_nowydron; 
   MacierzO obr,obr_sr; 
   char wybor;
   double dlugosc;
   double kat;
-  uint id;
-  std:: ifstream dron,sr1;
+  uint id,id_przeszkoda;
+  std:: ifstream dron,sr1,prze;
 
-  
 
-  api->change_ref_time_ms(0);
+
   dron.open("Dron.dat");
   for(int i = 0; i < 8; i++)
     {
@@ -50,27 +50,39 @@ int main() {
     };
   sr1.close();
 
+  prze.open("Przeszkoda.dat");
+  for(int i = 0; i < 12; i++)
+    {
+      prze >> prz[i];
+    };
+  prze.close();
 
   PowierzchniaGorna Tafla(api);
   PowierzchniaDolna Dno(api);
   Tafla.rysuj();
   Dno.rysuj();
-
-  Dron Dro(api,dr,s1,sr,obr,id,obr_sr);
-  Dro.rysuj();
-
-
+  Przeszkoda_Prost P1(api,prz,sr,obr,id_przeszkoda);
+ Dron  D(api,dr,s1,sr,sro,obr,id,obr_sr);
+  D.rysuj();
 
 
   
+  int p=0;
+  
   while(wybor!='e')
 	{
-
+	 
 	  cout<<"Steruj Dronem opcje:\n";
 	  cout<<"w - zmien polozenie\n";
-	  cout<<"q - obroc dron po osi Z\n";
+	  cout<<"o - obroc dron po osi Z\n";
+	  cout<<"p - dodaj przeszkode prostokatna nr ";
+	  cout<<p;
+	  cout<<"\n";
+	  cout<<"i - ile utworzono przeszkod\n ";
+	  cout<<"j - ile aktualnie jest przeszkod\n";
+	  cout<<"d - dodaj dron\n";
+	  cout<<"u - podaj nr przeszkody do usuniecia\n";
 	  cout<<"e - zamknij program\n";
-	 
 	  std::cin >> wybor;
 
 	  cout<<"Wybrales opcje:  ";
@@ -79,19 +91,46 @@ int main() {
 	switch(wybor)
 	    {
 	    case 'w':
-	      std::cout << "\nPodaj kąt pod jakim dron ma polecieć\n ";
+	      std::cout << "Podaj kąt pod jakim dron ma polecieć\n ";
 	      std::cin >> kat;
-	     std:: cout << "Podaj odleglosc na jaką ma polecieć dron: ";
+	     std:: cout << "Podaj odleglosc na jaką ma polecieć dron:\n ";
 	      std::cin >> dlugosc;
-	       Dro.przemieszczenie(kat,dlugosc);
+	       D.ruch_animowany(kat,dlugosc);
 
 	      
 	      break;
-	    case 'q':
-	     std:: cout << "Podaj kąt o jaki ma się obrócić dron: ";
+	    case 'o':
+	     std:: cout << "Podaj kąt o jaki ma się obrócić dron:\n ";
 	      std::cin >> kat;
-	      Dro.rotacja(kat);
+	      D.rotacja(kat);
 	     
+	      break;
+	    case'p':
+	      std::cout<< " Podaj wektor srodka przeszkody:\n";
+	      std::cin>>sr_przeszkody;
+                 P1.Dodaj_Przeszkode(sr_przeszkody);
+	      p++;
+	      break;
+	    case'd':
+	      std::cout<< "Podaj wektor srodka drona:\n";
+	      std::cin>>sr_nowydron;
+	     
+	      break;
+	    case'i':
+	      std::cout<<"Utworzono ";
+	      std::cout<< Przeszkoda::Zwroc_Utworzone();
+	      std::cout<<" przeszkod\n";
+	     
+	      break;
+	    case'j':
+	      std::cout<<"Istnieje ";
+		std::cout<<Przeszkoda::Zwroc_Istniejace();
+	      std::cout<<" przeszkod\n";
+	      break;
+	    case'u':
+	      
+	      std::cout<<"Usuniento przeszkode";
+	      P1.Usun_Przeszkode();
 	      break;
 	    case 'e':
 	     std:: cout << "Program zostanie zamknięty\n" << endl;

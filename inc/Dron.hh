@@ -1,78 +1,103 @@
 #ifndef DRON_HH
 #define DRON_HH
- 
+
+#include<unistd.h>
 #include<iostream>
 #include "Prostopadloscian.hh"
 #include "Sruba.hh"
+#include "Interfejs_Drona.hh"
+#include "Przeszkoda.hh"
+#include "Przeszkoda_Prost.hh"
 
-class Dron : public Prostopadloscian {
+class Dron : public Prostopadloscian,public Interfejs_Drona{
 protected:
+
   Sruba s1,s2;
+  
+  std::shared_ptr<Przeszkoda> P;
+  std::shared_ptr<Dron> D;
 public:
 
   Dron();
-  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr, MacierzO &obr,uint &id,MacierzO &o)
+  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr,Wektor<double,3>a ,MacierzO &obr,uint &id,MacierzO &o)
     :Prostopadloscian(obiekt,x,sr,obr,id),s1(obiekt,y,sr,obr,id,o),s2(obiekt,y,sr,obr,id,o){};
 														      
 
 
     
 
-  void przemieszczenie(double kat, double odleglosc){
+void  ruch_animowany(double kat, double odleglosc){
       
-    Wektor<double,3> ruch;
+    Wektor<double,3> X;
     double rad= (3.14*kat)/180;
     
 
-    ruch[0]=odleglosc*cos(rad);
-    ruch[1]=0;
-    ruch[2]= odleglosc*sin(rad);
+    X[0]=odleglosc*cos(rad);
+    X[1]=0;
+    X[2]= odleglosc*sin(rad);
+
+    for(int i=0;i<100;i++){
+      sr=sr+(obr*(X/100));
 
 
-
-    for(double i = 300; i >0; i--)
-      {
-
-	sr =sr + (obr * (ruch/i));		         
-
-	usun();
-
-	rysuj();
-	
-       
-       }
-  };
-
-  void rotacja(double kat){
-    for(int i=500;i>0;i--){       	         
       usun();
-        s1.rotacja(kat/i);
-	s2.rotacja(kat/i);
-        Prostopadloscian::rotacja(kat/i);
+   
+    
+      rysuj();
 
-    rysuj();
+ usleep(19900);
+           
+
+    }
+  }
+  
+  void rotacja(double kat){
+    for(int i=0;i<100;i++){       	         
+
+        s1.rotacja(kat/100);
+	s2.rotacja(kat/100);
+        Prostopadloscian::rotacja(kat/100);
+
+     
+	usun();      
+	rysuj();
+
+	 usleep(19900);
+     
+	
     }    
   };
+
   
   void rysuj(){
-    Wektor<double,3> X;
-     X[0]=0;X[1]=-20;X[2]=0;
-
-    s2.rysuj(obr*X+sr);
-    s1.rysuj(sr);
+    
+    s2.rysuj(obr*Dron::wierzch[3]+sr);      //srodek jest krawedzia drona
+    s1.rysuj(obr*Dron::wierzch[0]+sr);
     Prostopadloscian::rysuj();
   };
 
 
-  void usun(){
 
+  bool czy_kolizja(const Interfejs_Drona &  Dr){
+  }
+ 
+  
+
+  MacierzO get_Macierz_Obrotu(){
+    return obr;
+}
+ 
+
+  void usun(){
+    
     s1.usun();
     s2.usun();
-    api->erase_shape(id);
-    s1.obrot();
-    s2.obrot();
-  };
-  
+ 
+      s1.obrot();
+      s2.obrot();
+      
+  }
 };  
-
-#endif
+ 
+#endif                                                       
+ 

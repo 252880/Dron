@@ -1,4 +1,4 @@
- #ifndef POWIERZCHNIAGORNA_HH
+#ifndef POWIERZCHNIAGORNA_HH
 #define POWIERZCHNIAGORNA_HH
 
 #include "Rysuj_Obiekt.hh"

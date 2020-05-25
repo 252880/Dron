@@ -18,9 +18,9 @@ public:
   }
 
 
-
+cd ..
   void  rysuj(){
-    api->erase_shape(id);
+    
          Prostopadloscian HLP(*this);
   for(int i=0;i<8;i++)   
     { HLP.wierzch[i]= sr+obr*wierzch[i]; }
@@ -37,6 +37,10 @@ public:
     MacierzO HLP(obr);
     obr.obrotZ(kat);
     obr=obr*HLP;
+  };
+
+  void usun(){
+    api->erase_shape(id);
   };
   
 };
