@@ -19,7 +19,7 @@ protected:
 public:
 
   Dron();
-  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr,MacierzO &obr,uint &id,MacierzO &o)
+  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr,Wektor<double,3>a ,MacierzO &obr,uint &id,MacierzO &o)
     :Prostopadloscian(obiekt,x,sr,obr,id),s1(obiekt,y,sr,obr,id,o),s2(obiekt,y,sr,obr,id,o){};
 														      
 

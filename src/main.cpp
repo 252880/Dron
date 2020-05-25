@@ -26,12 +26,13 @@ int Przeszkoda::ile_istnieje=0;
 int main() {
   drawNS::APIGnuPlot3D  * api= new APIGnuPlot3D(-120,120,-120,120,-120,120,0);
   Wektor<double,3> dr[8],prz[8],s1[12];
-  Wektor<double,3> sr,sro,sr_przeszkody,sr_nowydron; 
+  Wektor<double,3> sr,sr_przeszkody,sr_nowydron; 
   MacierzO obr,obr_sr; 
   char wybor;
   double dlugosc;
   double kat;
   uint id,id_przeszkoda;
+  int p=0;
   std:: ifstream dron,sr1,prze;
 
 
@@ -62,12 +63,12 @@ int main() {
   Tafla.rysuj();
   Dno.rysuj();
   Przeszkoda_Prost P1(api,prz,sr,obr,id_przeszkoda);
- Dron  D(api,dr,s1,sr,sro,obr,id,obr_sr);
+  Dron  D(api,dr,s1,sr,obr,id,obr_sr);
   D.rysuj();
 
 
   
-  int p=0;
+
   
   while(wybor!='e')
 	{
@@ -78,7 +79,7 @@ int main() {
 	  cout<<"p - dodaj przeszkode prostokatna nr ";
 	  cout<<p;
 	  cout<<"\n";
-	  cout<<"i - ile utworzono przeszkod\n ";
+	  cout<<"i - ile utworzono przeszkod\n";
 	  cout<<"j - ile aktualnie jest przeszkod\n";
 	  cout<<"d - dodaj dron\n";
 	  cout<<"u - podaj nr przeszkody do usuniecia\n";

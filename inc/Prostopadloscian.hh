@@ -20,11 +20,11 @@ public:
 
 
   void  rysuj(){
-    api->erase_shape(id);
+    
          Prostopadloscian HLP(*this);
   for(int i=0;i<8;i++)   
     { HLP.wierzch[i]= sr+obr*wierzch[i]; }
-
+    api->erase_shape(id);
   
     id=api->draw_polyhedron(std::vector<std::vector<drawNS::Point3D> >
 			       {{HLP.wierzch[0],HLP.wierzch[1],HLP.wierzch[2],HLP.wierzch[3]},{HLP.wierzch[4],HLP.wierzch[5],HLP.wierzch[6],HLP.wierzch[7]}});
