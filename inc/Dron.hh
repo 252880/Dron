@@ -14,39 +14,32 @@ protected:
 
   Sruba s1,s2;
   
-  std::shared_ptr<Przeszkoda> P;
-  std::shared_ptr<Dron> D;
+ 
 public:
 
   Dron();
-  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,Wektor<double,3>*y,Wektor<double,3> sr,MacierzO &obr,uint &id,MacierzO &o)
-    :Prostopadloscian(obiekt,x,sr,obr,id),s1(obiekt,y,sr,obr,id,o),s2(obiekt,y,sr,obr,id,o){};
+  Dron(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3>*x,std::string k,Wektor<double,3>*y,Wektor<double,3> sr,MacierzO &obr,uint &id,MacierzO &o)
+    :Prostopadloscian(obiekt,x,k,sr,obr,id),s1(obiekt,y,sr,obr,id,o),s2(obiekt,y,sr,obr,id,o){};
 														      
-
-
     
 
-void  ruch_animowany(double kat, double odleglosc){
-      
+  void  ruch_animowany(double kat,double odleglosc){
     Wektor<double,3> X;
     double rad= (3.14*kat)/180;
-    
+             X[0]=odleglosc*cos(rad);
+             X[1]=0;
+             X[2]= odleglosc*sin(rad);
 
-    X[0]=odleglosc*cos(rad);
-    X[1]=0;
-    X[2]= odleglosc*sin(rad);
+   sr=sr+(obr*X);
 
-    for(int i=0;i<100;i++){
-      sr=sr+(obr*(X/100));
-
-
+     
       usun();
       rysuj();
 
  usleep(19900);
            
-
-    }
+    
+    
   }
   
   void rotacja(double kat){
@@ -69,24 +62,26 @@ void  ruch_animowany(double kat, double odleglosc){
   
   void rysuj(){
     
-    s2.rysuj(obr*Dron::wierzch[3]+sr);      //srodek jest krawedzia drona
-    s1.rysuj(obr*Dron::wierzch[0]+sr);
+    s1.rysuj(obr*Dron::wierzch[3]+sr);      //srodek jest krawedzia drona
+    s2.rysuj(obr*Dron::wierzch[0]+sr);
     Prostopadloscian::rysuj();
   };
 
 
 
-  bool czy_kolizja(const Interfejs_Drona &  Dr){
-  }
- 
+
+
   
-
-  MacierzO get_Macierz_Obrotu(){
-    return obr;
+  Wektor<double,3> get_srodek() const{
+    return (((sr+wierzch[0])+(sr+wierzch[6]))*0.5);
 }
- 
 
-  void usun(){
+  Wektor<double,3> get_wierzch()const{
+    return sr+wierzch[0];
+  }
+ 	     
+
+void  usun(){
     
     s1.usun();
     s2.usun();
@@ -95,6 +90,8 @@ void  ruch_animowany(double kat, double odleglosc){
       s2.obrot();
       
   }
+
+  
 };  
  
 #endif                                                       

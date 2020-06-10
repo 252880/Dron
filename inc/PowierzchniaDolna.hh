@@ -3,6 +3,7 @@
 
 #include "Rysuj_Obiekt.hh"
 #include "Wektor.hh"
+#include "Interfejs_Drona.hh"
 
 
 
@@ -10,7 +11,6 @@
 
 
 class PowierzchniaDolna : public Rysuj_Obiekt{
-
 public:
   PowierzchniaDolna();
 
@@ -32,10 +32,26 @@ public:
 	  drawNS::Point3D(-99,99,-99), drawNS::Point3D(-99,-0,-99),drawNS::Point3D(-99,-99,-99)}},"yellow");
 
 
-          api->redraw();
-
+ 
   };
+
+
+  
+bool Czy_Kolizja(const Interfejs_Drona & Dr){
+
+    Wektor<double,3> c =Dr.get_srodek();
+
+
+    double d=0,e=0;
+    e=c[2];
+    d=-91;
+    if(e<d){
+      std::cerr<<"Kolizja\n";
+      return false;
+    }
+    return true;
+}
 };
 
-
+ 
 #endif

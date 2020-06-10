@@ -17,7 +17,7 @@ public:
   }
 
   void  rysuj(Wektor<double,3> x){
-    obr.obrotY(90);   
+       
     sr=x;
     obr=obr*o;
     

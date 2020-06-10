@@ -8,7 +8,10 @@ protected:
 public:
 
   virtual void ruch_animowany (double kat,double odleglosc)=0;
-  virtual MacierzO get_Macierz_Obrotu ()=0;
+  virtual Wektor<double,3> get_srodek ()const=0;
+  virtual Wektor<double,3> get_wierzch()const=0;
+  virtual void rysuj()=0;
+  virtual void rotacja(double kat)=0;
 
 };
 

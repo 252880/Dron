@@ -12,43 +12,39 @@ public:
   Sruba();
   Sruba(drawNS::APIGnuPlot3D *obiekt, Wektor<double,3> *x, Wektor<double,3> &sr, MacierzO & obr,uint & id,MacierzO &os) : Graniastoslup6(obiekt,x,sr,obr,id), o(os) 
   {
-    for(int i=0;i<8;i++)
+    for(int i=0;i<12;i++)
       wierzch[i]=x[i];
   }
 
   void  rysuj(Wektor<double,3> x){
-    obr.obrotY(90);   
-    Sruba HLP(*this);
-    for(int i = 0; i < 12; i++)
-      {
-	HLP.wierzch[i] =  x +obr*o*wierzch[i];
-      }
-    id=api->draw_polyhedron(std::vector<std::vector<drawNS::Point3D>>
-			    {{HLP.wierzch[0],HLP.wierzch[1],HLP.wierzch[2],HLP.wierzch[3],HLP.wierzch[4],HLP.wierzch[5]
-		            },{
-			      HLP.wierzch[6],HLP.wierzch[7],HLP.wierzch[8],HLP.wierzch[9],HLP.wierzch[10],HLP.wierzch[11]}});
-  api->redraw();
-  };
-
-  void usun(){
-    api->erase_shape(id);
-  }
+       
+    sr=x;
+    obr=obr*o;
+    
+   Graniastoslup6::rysuj();
+    };
 
   void rotacja(double kat){
-    api->erase_shape(id);
+
     MacierzO HLP(obr);
- 
     obr.obrotZ(kat);
     obr=obr*HLP;
   
   };
-void obrot(){
+
+
+
+  void obrot(){
   
   MacierzO HLP(o);
-  o.obrotX(45);
-
+  o.obrotX(9);
   o=o*HLP;
-}  
+}
+
+  void usun(){
+    api->erase_shape(id);
+  }
+  
 };
 
 #endif

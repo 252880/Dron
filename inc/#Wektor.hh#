@@ -29,8 +29,9 @@ public:
   const T & operator [] (int index) const;
   T & operator [] (int index);
 
-  const drawNS::Point3D c()const;
- 
+  operator drawNS::Point3D(){return drawNS::Point3D(tab[0],tab[1], tab[2]);}
+
+  
   
 };
   
