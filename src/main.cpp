@@ -200,9 +200,10 @@ int main() {
 	      for(int i=0;i<100;i++){
 		 Kolekcja_Dronow[p]->ruch_animowany(kat,odleglosc/100);
 	       for(auto elem :Kolekcja_Przeszkod){
-	       elem->Czy_Kolizja(*Kolekcja_Dronow[p]);
-	       }
-
+		 elem->Czy_Kolizja(*Kolekcja_Dronow[p]);
+		   		 }
+		  
+	      
 	       Tafla.Czy_Kolizja(*Kolekcja_Dronow[p]);
 	       Dno.Czy_Kolizja(*Kolekcja_Dronow[p]);
 	       

@@ -12,7 +12,7 @@ public:
   virtual Wektor<double,3> get_wierzch()const=0;
   virtual void rysuj()=0;
   virtual void rotacja(double kat)=0;
-
+  
 };
 
 #endif

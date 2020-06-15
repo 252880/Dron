@@ -43,9 +43,10 @@ public:
     
     if((d+e)>f){
       std::cerr<<"Kolizja\n";
-      return false;
+            
+      return true;
 	}
-    return true;
+    return false;
   };
 
   void Dodaj_Przeszkode(){
